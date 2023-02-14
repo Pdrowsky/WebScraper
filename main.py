@@ -21,7 +21,8 @@ lista_urls = [
               ]
 
 
-todos_os_dias = []
+todos_os_dias = [] #Armazenamento dos objetos a serem transcritos para xlsx ou database.
+
 for url in lista_urls:
     #FEITO (abrir a url)
     pagina = urlopen(url)
@@ -32,13 +33,10 @@ for url in lista_urls:
     index_inicio_titulo = html_fim.find('<b><H6>') + len('<b><H6>')
     index_fim_titulo = html_fim.find('</b></H6>')
     titulo = html_fim[index_inicio_titulo:index_fim_titulo]
-    print(titulo)
 
     #FEITO (pegar o mês e o ano)
     mes = titulo[len(titulo)-8:len(titulo)-5]
-    print(mes)
     ano = titulo[len(titulo)-4:]
-    print(ano)
 
     #FEITO (excluir tudo até o título)
     html_fim = html_fim[index_fim_titulo+len('</b></H6>'):]
@@ -58,8 +56,6 @@ for url in lista_urls:
     cabecalho = cabecalho[0:cabecalho.index('Totais')]
     dias = cabecalho[cabecalho.index('01'):]
     legenda = cabecalho[0:cabecalho.index('01')]
-    print(dias)
-    print(legenda)
 
     #FEITO (extrair resultados da tabela)
     html_resultados = html_fim
@@ -74,8 +70,6 @@ for url in lista_urls:
         except Exception:
             pass
     resultados = resultados[0:resultados.index('')]
-
-    print(resultados)
 
     #FEITO (cria objetos para cada dia com todas as suas informações)
     result_count = 0
